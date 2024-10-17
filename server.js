@@ -3,6 +3,8 @@ const express = require('express');
 const connectDB = require('./config/database');
 const routes = require('./routes/bookRoute');
 require('dotenv').config();
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
 
 const app = express();
 
@@ -14,6 +16,9 @@ connectDB();
 
 // Use book routes
 app.use('/', routes);
+
+// swagger setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Start the server
 const PORT = process.env.PORT || 8080;

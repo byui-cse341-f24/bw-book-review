@@ -34,7 +34,7 @@ const addBook = async (req, res) => {
 
     try {
         const newBook = await book.save();
-        res.status(201).json(newBook);
+        res.status(201).json({ id: newBook._id });
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -52,7 +52,7 @@ const updateBook = async (req, res) => {
         book.review = req.body.review;
 
         const updatedBook = await book.save();
-        res.json(updatedBook);
+        res.json({ message: 'Book Review updated succesfully!', book: updatedBook });
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -65,7 +65,7 @@ const deleteBook = async (req, res) => {
         if (!book) return res.status(404).json({ message: 'Book not found. ' });
 
         await book.deleteOne({ _id: req.params.id });
-        res.status(204).send();
+        res.json({ message: 'Book Review deleted succesfully! '});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
