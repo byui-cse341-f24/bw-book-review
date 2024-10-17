@@ -42,7 +42,7 @@ Once the server is running, you can access the API at `http://localhost:8080`.
 
 - **Get all books**
     ```http
-    GET /api/books
+    GET /books
     ```
     Response:
     ```json
@@ -59,7 +59,7 @@ Once the server is running, you can access the API at `http://localhost:8080`.
 
 - **Get a book by ID**
     ```http
-    GET /api/books/{id}
+    GET /books/{id}
     ```
     Response:
     ```json
@@ -74,7 +74,7 @@ Once the server is running, you can access the API at `http://localhost:8080`.
 
 - **Create a new book**
     ```http
-    POST /api/books
+    POST /books
     ```
     Request Body:
     ```json
@@ -94,7 +94,7 @@ Once the server is running, you can access the API at `http://localhost:8080`.
 
 - **Update a book by ID**
     ```http
-    PUT /api/books/{id}
+    PUT /books/{id}
     ```
     Request Body:
     ```json
@@ -121,7 +121,7 @@ Once the server is running, you can access the API at `http://localhost:8080`.
 
 - **Delete a book by ID**
     ```http
-    DELETE /api/books/{id}
+    DELETE /books/{id}
     ```
     Response:
     ```json
