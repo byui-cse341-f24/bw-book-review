@@ -108,7 +108,7 @@ Once the server is running, you can access the API at `http://localhost:8080`.
     Response:
     ```json
     {
-      "message": "Book updated successfully",
+      "message": "Book Review updated successfully",
       "book": {
         "id": "60d0fe4f5311236168a109ca",
         "title": "The Great Gatsby",
@@ -126,7 +126,7 @@ Once the server is running, you can access the API at `http://localhost:8080`.
     Response:
     ```json
     {
-      "message": "Book deleted successfully"
+      "message": "Book Review deleted successfully"
     }
     ```
 
