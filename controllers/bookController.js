@@ -44,7 +44,7 @@ const addBook = async (req, res) => {
 const updateBook = async (req, res) => {
     try {
         const book = await Book.findById(req.params.id);
-        if (!book) return res.status(404).json({ messge: 'Book not found.' });
+        if (!book) return res.status(404).json({ message: 'Book not found.' });
         
         book.title = req.body.title;
         book.author = req.body.author;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/bookController');
+const validation = require('../middleware/validate');
 
 /**
  * @swagger
@@ -113,10 +114,26 @@ router.get('/books/:id', bookController.getBookById);
  *                   description: The auto-generated id of the book
  *               example:
  *                 id: "60d0fe4f5311236168a109ca"
+ *       412:
+ *         description: Validation failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Validation failed
+ *                 data:
+ *                   type: object
+ *                   description: Validation errors
  *       500:
  *         description: Some server error
  */
-router.post('/books', bookController.addBook);
+router.post('/books', validation.saveBookReview, bookController.addBook);
 
 /**
  * @swagger
@@ -150,12 +167,28 @@ router.post('/books', bookController.addBook);
  *                   example: Book Review updated successfully
  *                 book:
  *                   $ref: '#/components/schemas/Book'
+ *       412:
+ *         description: Validation failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Validation failed
+ *                 data:
+ *                   type: object
+ *                   description: Validation errors
  *       404:
  *         description: The book was not found
  *       500:
  *         description: Some error happened
  */
-router.put('/books/:id', bookController.updateBook);
+router.put('/books/:id', validation.saveBookReview, bookController.updateBook);
 
 /**
  * @swagger
