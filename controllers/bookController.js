@@ -29,8 +29,11 @@ const addBook = async (req, res) => {
         title: req.body.title,
         author: req.body.author,
         rating: req.body.rating,
-        review: req.body.review
     });
+
+    if (req.body.review) {
+        bookData.review = req.body.review;
+    }
 
     try {
         const newBook = await book.save();
@@ -52,7 +55,7 @@ const updateBook = async (req, res) => {
         book.review = req.body.review;
 
         const updatedBook = await book.save();
-        res.json({ message: 'Book Review updated succesfully!', book: updatedBook });
+        res.status(204).send();
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -65,7 +68,7 @@ const deleteBook = async (req, res) => {
         if (!book) return res.status(404).json({ message: 'Book not found. ' });
 
         await book.deleteOne({ _id: req.params.id });
-        res.json({ message: 'Book Review deleted succesfully! '});
+        res.status(200).json({ message: 'Book Review deleted succesfully! '});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
