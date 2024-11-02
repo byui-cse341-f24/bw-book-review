@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/bookController');
 const validation = require('../middleware/validate');
+const { requiresAuth } = require('express-openid-connect');
 
 /**
  * @swagger
@@ -133,7 +134,7 @@ router.get('/books/:id', bookController.getBookById);
  *       500:
  *         description: Some server error
  */
-router.post('/books', validation.saveBookReview, bookController.addBook);
+router.post('/books', requiresAuth(), validation.saveBookReview, bookController.addBook);
 
 /**
  * @swagger
@@ -188,7 +189,7 @@ router.post('/books', validation.saveBookReview, bookController.addBook);
  *       500:
  *         description: Some error happened
  */
-router.put('/books/:id', validation.saveBookReview, bookController.updateBook);
+router.put('/books/:id', requiresAuth(), validation.saveBookReview, bookController.updateBook);
 
 /**
  * @swagger
@@ -217,6 +218,6 @@ router.put('/books/:id', validation.saveBookReview, bookController.updateBook);
  *       404:
  *         description: The book was not found
  */
-router.delete('/books/:id', bookController.deleteBook);
+router.delete('/books/:id', requiresAuth(), bookController.deleteBook);
 
 module.exports = router;

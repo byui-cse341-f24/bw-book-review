@@ -1,6 +1,37 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const { requiresAuth } = require('express-openid-connect');
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - username
+ *         - email
+ *         - password
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the user
+ *         username:
+ *           type: string
+ *           description: The username of the user
+ *         email:
+ *           type: string
+ *           description: The email of the user
+ *         password:
+ *           type: string
+ *           description: The password of the user
+ *       example:
+ *         id: d5fE_asz
+ *         username: johndoe
+ *         email: johndoe@example.com
+ *         password: password123
+ */
 
 /**
  * @swagger
@@ -23,19 +54,9 @@ const userController = require('../controllers/userController');
  *             schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
- *                     description: The auto-generated id of the user
- *                   username:
- *                     type: string
- *                     description: The username of the user
- *                   email:
- *                     type: string
- *                     description: The email of the user
+ *                 $ref: '#/components/schemas/User'
  */
-router.get('/users', userController.getAllUsers);
+router.get('/users', requiresAuth(), userController.getAllUsers);
 
 /**
  * @swagger
@@ -56,16 +77,11 @@ router.get('/users', userController.getAllUsers);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 username:
- *                   type: string
- *                 email:
- *                   type: string
+ *               $ref: '#/components/schemas/User'
  *       404:
  *         description: The user was not found
  */
-router.get('/users/:id', userController.getUserById);
+router.get('/users/:id', requiresAuth(), userController.getUserById);
 
 /**
  * @swagger
@@ -78,17 +94,16 @@ router.get('/users/:id', userController.getUserById);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               email:
- *                 type: string
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       201:
  *         description: The user was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       400:
- *         description: Validation failed
+ *         description: Bad request
  */
 router.post('/users', userController.addUser);
 
@@ -110,19 +125,20 @@ router.post('/users', userController.addUser);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               email:
- *                 type: string
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
  *         description: The user was updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Bad request
  *       404:
  *         description: The user was not found
  */
-router.put('/users/:id', userController.updateUser);
+router.put('/users/:id', requiresAuth(), userController.updateUser);
 
 /**
  * @swagger
@@ -143,6 +159,6 @@ router.put('/users/:id', userController.updateUser);
  *       404:
  *         description: The user was not found
  */
-router.delete('/users/:id', userController.deleteUser);
+router.delete('/users/:id', requiresAuth(), userController.deleteUser);
 
 module.exports = router;
