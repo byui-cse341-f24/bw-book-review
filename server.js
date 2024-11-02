@@ -1,7 +1,7 @@
 // server.js
 const express = require('express');
 const connectDB = require('./config/database');
-const routes = require('./routes/bookRoute');
+const routes = require('./routes/index');
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');

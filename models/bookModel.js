@@ -18,8 +18,18 @@ const bookSchema = new mongoose.Schema({
     review: {
         type: String,
         required: false,
-    }
-});
+    },
+    genre: {
+        type: String,
+        required: true,
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        required: true,
+        ref: 'User',
+        unique: true,
+    },
+}); 
 
 const Book = mongoose.model('Book', bookSchema);
 

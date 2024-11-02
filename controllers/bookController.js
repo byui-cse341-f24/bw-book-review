@@ -29,11 +29,10 @@ const addBook = async (req, res) => {
         title: req.body.title,
         author: req.body.author,
         rating: req.body.rating,
+        review: req.body.review,
+        genre: req.body.genre,
+        userId: req.body.userId
     });
-
-    if (req.body.review) {
-        bookData.review = req.body.review;
-    }
 
     try {
         const newBook = await book.save();

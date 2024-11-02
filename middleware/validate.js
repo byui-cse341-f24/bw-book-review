@@ -5,7 +5,9 @@ const saveBookReview = async (req, res, next) => {
         title: 'required|string',
         author: 'required|string',
         rating: 'required|integer|min:1|max:5',
-        review: 'string'
+        review: 'string',
+        genre: 'required'|'string',
+        userId: 'required'|'string'
     };
     validator(req.body, validationRule, {}, (err, status) => {
         if (!status) {
