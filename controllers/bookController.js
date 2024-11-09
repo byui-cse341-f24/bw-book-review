@@ -1,5 +1,4 @@
 const Book = require('../models/bookModel');
-const { ObjectId } = require('mongodb');
 
 // Get all books
 const getAllBooks = async (req, res) => {

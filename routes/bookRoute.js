@@ -7,6 +7,10 @@ const { requiresAuth } = require('express-openid-connect');
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     oidcAuth:
+ *       type: openIdConnect
+ *       openIdConnectUrl: 'https://dev-kuz06fnjpkyzr40v.us.auth0.com'
  *   schemas:
  *     Book:
  *       type: object
@@ -38,6 +42,8 @@ const { requiresAuth } = require('express-openid-connect');
  *         author: F. Scott Fitzgerald
  *         rating: 5
  *         review: A classic novel of the Roaring Twenties.
+ *         genre: Tragedy
+ *         userId: 6725b763c41cb0247ef7068f
  */
 
 /**
@@ -96,6 +102,8 @@ router.get('/books/:id', bookController.getBookById);
  *   post:
  *     summary: Create a new book
  *     tags: [Books]
+ *     security:
+ *       - oidcAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -142,6 +150,8 @@ router.post('/books', requiresAuth(), validation.saveBookReview, bookController.
  *   put:
  *     summary: Update the book by the id
  *     tags: [Books]
+ *     security:
+ *       - oidcAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -156,18 +166,8 @@ router.post('/books', requiresAuth(), validation.saveBookReview, bookController.
  *           schema:
  *             $ref: '#/components/schemas/Book'
  *     responses:
- *       200:
+ *       204:
  *         description: The book was updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Book Review updated successfully
- *                 book:
- *                   $ref: '#/components/schemas/Book'
  *       412:
  *         description: Validation failed
  *         content:
@@ -197,6 +197,8 @@ router.put('/books/:id', requiresAuth(), validation.saveBookReview, bookControll
  *   delete:
  *     summary: Remove the book by id
  *     tags: [Books]
+ *     security:
+ *       - oidcAuth: []
  *     parameters:
  *       - in: path
  *         name: id

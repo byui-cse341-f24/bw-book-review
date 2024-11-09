@@ -1,18 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const validation = require('../middleware/validate')
 const { requiresAuth } = require('express-openid-connect');
 
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     oidcAuth:
+ *       type: openIdConnect
+ *       openIdConnectURl: 'https://dev-kuz06fnjpkyzr40v.us.auth0.com'
  *   schemas:
  *     User:
  *       type: object
  *       required:
  *         - username
  *         - email
- *         - password
  *       properties:
  *         id:
  *           type: string
@@ -23,14 +27,10 @@ const { requiresAuth } = require('express-openid-connect');
  *         email:
  *           type: string
  *           description: The email of the user
- *         password:
- *           type: string
- *           description: The password of the user
  *       example:
  *         id: d5fE_asz
  *         username: johndoe
  *         email: johndoe@example.com
- *         password: password123
  */
 
 /**
@@ -46,6 +46,8 @@ const { requiresAuth } = require('express-openid-connect');
  *   get:
  *     summary: Returns the list of all users
  *     tags: [Users]
+ *     security:
+ *       - oidcAuth: []
  *     responses:
  *       200:
  *         description: The list of the users
@@ -64,6 +66,8 @@ router.get('/users', requiresAuth(), userController.getAllUsers);
  *   get:
  *     summary: Get the user by id
  *     tags: [Users]
+ *     security:
+ *       - oidcAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -105,7 +109,7 @@ router.get('/users/:id', requiresAuth(), userController.getUserById);
  *       400:
  *         description: Bad request
  */
-router.post('/users', userController.addUser);
+router.post('/users', validation.saveUser, userController.addUser);
 
 /**
  * @swagger
@@ -113,6 +117,8 @@ router.post('/users', userController.addUser);
  *   put:
  *     summary: Update the user by the id
  *     tags: [Users]
+ *     security: 
+ *       - oidcAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -138,7 +144,7 @@ router.post('/users', userController.addUser);
  *       404:
  *         description: The user was not found
  */
-router.put('/users/:id', requiresAuth(), userController.updateUser);
+router.put('/users/:id', requiresAuth(), validation.saveUser, userController.updateUser);
 
 /**
  * @swagger
