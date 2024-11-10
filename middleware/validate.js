@@ -27,7 +27,7 @@ const saveUser = async (req, res, next) => {
         username: 'required|string',
         email: 'required|string'
     }; 
-    validator(req.body, validationRule(), {}, (err, status) => {
+    validator(req.body, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412).send({
                 success: false,

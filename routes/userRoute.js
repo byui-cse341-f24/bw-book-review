@@ -18,9 +18,6 @@ const { requiresAuth } = require('express-openid-connect');
  *         - username
  *         - email
  *       properties:
- *         id:
- *           type: string
- *           description: The auto-generated id of the user
  *         username:
  *           type: string
  *           description: The username of the user
@@ -28,7 +25,6 @@ const { requiresAuth } = require('express-openid-connect');
  *           type: string
  *           description: The email of the user
  *       example:
- *         id: d5fE_asz
  *         username: johndoe
  *         email: johndoe@example.com
  */

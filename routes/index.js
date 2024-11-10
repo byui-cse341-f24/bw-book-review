@@ -47,6 +47,12 @@ router.get('/', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
+router.get('/logout', (req, res) => {
+    res.oidc.logout({
+        returnTo: process.env.BASE_URL
+    });
+});
+
 // Use book routes
 router.use('/', bookRoutes);
 
